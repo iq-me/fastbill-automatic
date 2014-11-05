@@ -1,8 +1,8 @@
-# fastbill-automatic
+# node-fastbill-automatic
 
 Provides easy access to `fastbill-automatic-api`
 
-This module is an early implementation of some features of the fastbill-automatic-api, based on https://github.com/iiiich/fastbill. Please let me know if you need some improvements.
+This module is an early implementation of some features of the fastbill-automatic-api, based on https://github.com/iiiich/fastbill. Please let us if you need some improvements.
 The fastbill-automatic documentation can be found here: https://automatic.fastbill.com/docs/API-Doku_FBA_V1-12.pdf
 
 ### Installation
@@ -10,14 +10,14 @@ The fastbill-automatic documentation can be found here: https://automatic.fastbi
 To install this adapter, run:
 
 ```sh
-$ npm install fastbill-automatic
+$ npm install node-fastbill-automatic
 ```
 
 ### Usage
 
 On top of your file require the module and initialize it.
 ```js
-var Fastbill = require('fastbill-automatic');
+var Fastbill = require('node-fastbill-automatic');
 
 var fastbill = new Fastbill({
       user : '####',
@@ -30,13 +30,13 @@ This Module exposes the following methods:
 
 ###### `get()`
 ```js
-fastbill.get("customer",{"FILTER": {}, LIMIT: 2},function(res){
+fastbill.get("customer",{"FILTER": {}, LIMIT: 2},function(err, res){
   console.log(res);
 });
 ```
 ###### `getOne()`
 ```js
-fastbill.getOne("customer",{"FILTER": {}},function(res){
+fastbill.getOne("customer",{"FILTER": {}},function(err, res){
   console.log(res);
 });
 ```
@@ -53,7 +53,7 @@ fastbill.create('customer', {
     CITY: 'Coos Bay',
     ZIPCODE: '97420'
 }, function(res){
-    console.log(res);
+    console.log(err, res);
 });
 ```
 ###### `update()`
@@ -61,18 +61,16 @@ fastbill.create('customer', {
 fastbill.update('customer', '701524', {
     EMAIL: 'somerandomemail@somenewrandomprovider.com'
 }, function(res){
-    console.log(res);
+    console.log(err, res);
 });
 ```
 ###### `del()`
 
 ```js
 fastbill.del('customer', '701524', function(res){
-    console.log(res);
+    console.log(err, res);
 });
 ```
-
-
 
 ### Interfaces
 
@@ -83,7 +81,7 @@ fastbill.del('customer', '701524', function(res){
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Paul Em (based on code from Robert Boeing)
+Copyright (c) 2014 Glanzkinder GmbH (based on code from Paul Em and Robert Boeing)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

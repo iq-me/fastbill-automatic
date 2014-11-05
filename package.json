@@ -1,7 +1,7 @@
 {
-  "name": "fastbill-automatic",
-  "version": "0.0.4",
-  "description": "This module is an early implementation of some features of the fastbill-api.",
+  "name": "node-fastbill-automatic",
+  "version": "0.0.1",
+  "description": "This module is an early implementation of some features of the fastbill-automatic-api.",
   "keywords": [
     "node",
     "js",
@@ -9,31 +9,33 @@
     "automatic",
     "api"
   ],
-  "bugs": "https://github.com/paul-em/fastbill-automatic/issues",
+  "bugs": "https://github.com/glanzkinder/fastbill-automatic/issues",
   "author": {
-    "name": "Paul Em",
-    "email": "paul3m@gmail.com",
-    "url": "https://github.com/paul-em"
+    "name": "Robert Wachtel",
+    "email": "robert.wachtel@glanzkinder.de",
+    "url": "https://github.com/glanzkinder"
   },
-  "homepage": "https://github.com/paul-em/fastbill-automatic",
+  "homepage": "https://github.com/glanzkinder/fastbill-automatic",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paul-em/fastbill-automatic.git"
+    "url": "https://github.com/glanzkinder/fastbill-automatic.git"
   },
   "main": "lib/fastbill.js",
   "dependencies": {
-    "node-rest-client": "~1.0.0",
-    "underscore": "~1.6.0"
+    "lodash": "^2.4.1",
+    "node-rest-client": "~1.0.0"
   },
   "devDependencies": {
+    "expect.js": "~0.3.1",
     "grunt": "~0.4.1",
-    "grunt-node-inspector": "~0.1.1",
-    "grunt-nodemon": "~0.1.1",
     "grunt-concurrent": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
+    "grunt-mocha-test": "^0.12.2",
+    "grunt-node-inspector": "~0.1.1",
+    "grunt-nodemon": "~0.1.1",
     "grunt-open": "~0.2.2",
     "grunt-wait": "~0.1.0",
-    "expect.js": "~0.3.1"
+    "mocha": "^2.0.1"
   },
   "scripts": {
     "start": "lib/fastbill.js",

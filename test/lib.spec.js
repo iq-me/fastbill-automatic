@@ -1,4 +1,4 @@
-var Fastbill = require('./../lib/fastbill');
+var FastBill = require('./../lib/fastbill');
 var testConf = require('./../testConf');
 var expect = require("expect.js");
 
@@ -7,23 +7,37 @@ if (!testConf.user || !testConf.apiKey) {
     return;
 }
 
-var fastbill = new Fastbill(testConf);
+var fastBill = new FastBill(testConf);
 
 describe('lib test', function () {
-    it('should respond with an error for non existing customer', function (done) {
-        fastbill.get('customer', {
+    it('should respond with an empty array for non existing customer', function (done) {
+        fastBill.get('customer', {
             FILTER: {
                 CUSTOMER_ID: '99999999'
             },
             LIMIT: 1
-        }, function (res) {
+        }, function (err, res) {
+            expect(err).to.be(null);
             expect(res.length).to.be(0);
             done();
         });
     });
 
+    it('should respond with an access error if given wrong credentials', function(done) {
+        var wrongFastBill = new FastBill({ user: null, apiKey: null });
+        wrongFastBill.get('customer', {
+            FILTER: {
+                CUSTOMER_ID: '99999999'
+            },
+            LIMIT: 1
+        }, function (err, res) {
+            expect(err).not.to.be(null);
+            done();
+        });
+    });
+
     it('should create a customer, get it back, update it and delete it', function (done) {
-        fastbill.create('customer', {
+        fastBill.create('customer', {
             FIRST_NAME: 'Jeffrey',
             LAST_NAME: 'Clarke', // required
             EMAIL: 'JeffreyWClarke@einrot.com',
@@ -33,25 +47,32 @@ describe('lib test', function () {
             ADDRESS: '2711 Sycamore Road',
             CITY: 'Coos Bay',
             ZIPCODE: '97420'
-        }, function (res) {
+        }, function (err, res) {
+            expect(err).to.be(null);
             expect(res.STATUS).to.be('success');
             expect(res.CUSTOMER_ID).to.be.ok();
             var customerId = res.CUSTOMER_ID;
-            fastbill.get('customer', {
+            fastBill.get('customer', {
                 FILTER: {
                     CUSTOMER_ID: customerId
                 },
                 LIMIT: 1
-            }, function (res) {
-                expect(parseInt(res.CUSTOMER_ID)).to.be(parseInt(customerId));
-                var email = 'somerandomemail@somenewrandomprovider.com';
-                fastbill.update('customer', customerId, {
-                    EMAIL: email
-                }, function (res) {
-                    expect(res.STATUS).to.be('success');
-                    fastbill.del('customer', customerId, function (res) {
+            }, function (err, res) {
+                expect(err).to.be(null);
+                expect(parseInt(res[0].CUSTOMER_ID)).to.be(parseInt(customerId));
+                fastBill.getOne('customer', { FILTER: { CUSTOMER_ID: customerId } }, function (err, res) {
+                    expect(err).to.be(null);
+                    expect(parseInt(res.CUSTOMER_ID)).to.be(parseInt(customerId));
+                    var email = 'somerandomemail@somenewrandomprovider.com';
+                    fastBill.update('customer', customerId, {
+                        EMAIL: email
+                    }, function (err, res) {
+                        expect(err).to.be(null);
                         expect(res.STATUS).to.be('success');
-                        done();
+                        fastBill.del('customer', customerId, function (err, res) {
+                            expect(res.STATUS).to.be('success');
+                            done();
+                        });
                     });
                 });
             });
