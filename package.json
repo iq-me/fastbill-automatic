@@ -1,6 +1,6 @@
 {
-  "name": "node-fastbill-automatic",
-  "version": "0.0.1",
+  "name": "fastbill-automatic",
+  "version": "0.0.5",
   "description": "This module is an early implementation of some features of the fastbill-automatic-api.",
   "keywords": [
     "node",
